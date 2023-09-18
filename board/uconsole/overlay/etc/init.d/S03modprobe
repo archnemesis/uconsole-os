@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Load kernel modules
+#
+
+modprobe brcmfmac

@@ -1,0 +1,123 @@
+#!/bin/sh
+#
+# /init - pre-init (initramfs) boot script
+#
+
+PATH="/bin:/sbin:/usr/bin:/usr/sbin"
+export PATH
+
+fatal ()
+{
+    echo "ERROR: fatal error occurred; rebooting in 5 seconds"
+    sleep 5
+    reboot -f
+}
+
+# devtmpfs does not get automounted for initramfs
+mount -t devtmpfs devtmpfs /dev
+
+# Use the /dev/console device node from devtmpfs if possible to not
+# confuse glibc's ttyname_r(). This may fail (e.g. booted with
+# console=), and errors from exec will terminate the shell, so use a
+# subshell for the test.
+if (exec 0< /dev/console) 2> /dev/null; then
+    exec 0< /dev/console
+    exec 1> /dev/console
+    exec 2> /dev/console
+fi
+
+mount -t proc none /proc
+mount -t sysfs none /sys
+[ -e /dev/pts ] || mkdir /dev/pts
+mount -t devpts -o mode=0622 none /dev/pts
+
+init="/sbin/init"
+ro="ro"
+root=
+rootdelay=
+rootflags=
+rootfstype="auto"
+rootwait=
+
+for param in $(cat /proc/cmdline); do
+    case "${param}" in
+    init=*)
+        init="${param#init=}"
+        ;;
+    ro|rw)
+        ro="${param}"
+        ;;
+    root=*)
+        root="${param#root=}"
+        ;;
+    rootdelay=*)
+        rootdelay="${param#rootdelay=}"
+        ;;
+    rootflags=*)
+        rootflags="${param#rootflags=}"
+        ;;
+    rootfstype=*)
+        rootfstype="${param#rootfstype=}"
+        ;;
+    rootwait)
+        rootwait="${param}"
+        ;;
+    *)
+        [ -n "${DEBUG}" ] && \
+        echo "DEBUG: ignoring unknown kernel param ${param}"
+        ;;
+    esac
+done
+
+mount -t tmpfs none /media
+
+if [ -n "${rootdelay}" ]; then
+    echo "INFO: delay ${rootdelay} seconds for media device init..."
+    sleep ${rootdelay}
+fi
+
+# mdev/udev coldplug (e.g. for USB disk mounts)
+echo "" > /dev/mdev.seq
+echo "/sbin/mdev" > /proc/sys/kernel/hotplug
+mdev -s
+
+mount -t tmpfs none /tmp
+
+# search all mounted removable media for upgrade files and perform upgrade
+if [ -f /sbin/fwupdate.sh ]; then
+    /sbin/fwupdate.sh
+fi
+
+umount /tmp
+
+if [ ! -n "${root}" ]; then
+    echo "WARN: no rootfs device specified; continuing with ramdisk boot"
+    echo 4 > /proc/sys/kernel/printk
+    exec "${init}"
+fi
+
+mkdir -p /newroot
+
+while [ ! -b "${root}" -a -n "${rootwait}" ]; do
+    echo "INFO: waiting for rootfs device ${root}"
+    sleep 1
+done
+
+if ! mount -n -t "${rootfstype}" -o "${rootflags:+${rootflags},}${ro}" \
+    "${root}" /newroot
+then
+    echo "ERROR: failed to mount rootfs device ${root}"
+    fatal
+fi
+
+mount --move /proc /newroot/proc
+mount --move /sys /newroot/sys
+mount --move /dev /newroot/dev
+mount --move /media /newroot/media
+
+# hush kernel messages on console
+echo 4 > /newroot/proc/sys/kernel/printk
+
+# chain to real init
+exec switch_root /newroot "${init}"
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+docker build --progress=plain -t uconsole-os-builder .
+docker run \
+	--interactive \
+	--tty \
+	--volume "${PWD}:/build" \
+	--workdir /build \
+	--entrypoint /build/build.sh uconsole-os-builder $@
