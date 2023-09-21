@@ -1,0 +1,5 @@
+Defaults env_reset
+Defaults secure_path="/usr/sbin:/usr/bin:/sbin:/bin"
+
+root	ALL=(ALL:ALL) ALL
+robin	ALL=(ALL:ALL) ALL

@@ -42,6 +42,12 @@ for fwimage in /media/*/firmware.img; do
 	if [ -e "${fwimage}" ]; then
 		echo "Found firmware update file ${fwimage}"
 
+		if [ -f "$(dirname ${fwimage})/eraseall.txt" ]; then
+			echo "WARNING: User data will be erased!!!"
+			sleep 5
+			export ERASE_USER_DATA=1
+		fi
+
 		if do_update "${fwimage}"; then
 			echo "Firmware update complete"
 		else

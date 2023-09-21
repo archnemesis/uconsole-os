@@ -9,4 +9,5 @@ RUN apt-get install -y \
   cpio \
   unzip \
   rsync \
-  bc
+  bc \
+  locales

@@ -3,4 +3,6 @@
 # Load kernel modules
 #
 
+echo "Loading kernel modules..."
+
 modprobe brcmfmac
