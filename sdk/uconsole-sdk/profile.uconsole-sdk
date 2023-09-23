@@ -1,0 +1,5 @@
+#
+# /etc/profile.uconsole-sdk
+#
+
+. /opt/uconsole-sdk/output/host/environment-setup

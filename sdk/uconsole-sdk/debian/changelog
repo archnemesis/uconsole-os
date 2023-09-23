@@ -1,0 +1,5 @@
+uconsole-sdk (@SDK_VERSION@) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Robin Gingras <robin@robingingras.com>  Thu, 21 Sep 2023 23:58:09 -0700

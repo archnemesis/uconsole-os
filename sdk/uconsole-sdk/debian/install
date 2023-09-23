@@ -1,0 +1,14 @@
+uconsole-sdk-version /usr/bin
+profile.uconsole-sdk /etc
+sdk-info /opt/uconsole-sdk
+
+../../buildroot/output/host /opt/uconsole-sdk/output
+../../buildroot/output/images/bcm2711-rpi-cm4.dtb /opt/uconsole-sdk/output/images
+../../buildroot/output/images/boot.vfat /opt/uconsole-sdk/output/images
+../../buildroot/output/images/rootfs.ext2 /opt/uconsole-sdk/output/images
+../../buildroot/output/images/rootfs.ext4 /opt/uconsole-sdk/output/images
+../../buildroot/output/images/data.ext4 /opt/uconsole-sdk/output/images
+../../buildroot/output/images/sdcard.img /opt/uconsole-sdk/output/images
+../../buildroot/output/images/firmware.img /opt/uconsole-sdk/output/images
+../../buildroot/output/images/Image /opt/uconsole-sdk/output/images
+../../buildroot/output/images/rpi-firmware /opt/uconsole-sdk/output/images

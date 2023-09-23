@@ -1,0 +1,18 @@
+Source: uconsole-sdk
+Maintainer: Robin Gingras <robin@robingingras.com>
+
+Package: uconsole-sdk
+Architecture: any
+Depends: ${misc:Depends},
+  build-essential,
+  file,
+  cpio,
+  curl,
+  git,
+  less,
+  make,
+  vim,
+  zip
+Description: Buildroot SDK for uConsole-OS
+  This package contains the cross-compiling tool chain and build artifacts
+  for the uConsole-OS project.

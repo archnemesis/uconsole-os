@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: uconsole-sdk
+Upstream-Contact: Robin Gingras <robin@robingingras.com>
+Source: https://github.com/archnemesis/uconsole-os
+Files: *
+Copyright: 2022 Robin Gingras
+License: BSD-3-Clause

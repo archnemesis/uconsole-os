@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y \
@@ -10,4 +10,6 @@ RUN apt-get install -y \
   unzip \
   rsync \
   bc \
-  locales
+  locales \
+  git \
+  debhelper
