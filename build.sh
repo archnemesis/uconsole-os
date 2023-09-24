@@ -27,6 +27,11 @@ case "${TARGET}" in
 			dpkg-buildpackage -us -uc
 		)
 		;;
+	"clean")
+		rm -rf sdk/uconsole-sdk-* sdk/uconsole-sdk_*
+		cd buildroot
+		make clean
+		;;
 	*)
 		cd buildroot
 		make BR2_EXTERNAL=../ $@
