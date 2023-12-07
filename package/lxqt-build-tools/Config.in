@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LXQT_BUILD_TOOLS
+	bool "lxqt-build-tools"
+	depends on BR2_PACKAGE_QT5BASE
+	help
+	  Provides several tools needed to build LXQt.
+
+	  https://github.com/lxqt/lxqt-build-tools/

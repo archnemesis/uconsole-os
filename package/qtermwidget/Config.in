@@ -1,0 +1,7 @@
+config BR2_PACKAGE_QTERMWIDGET
+	bool "qtermwidget"
+	depends on BR2_PACKAGE_LXQT_BUILD_TOOLS
+	help
+	  A terminal emulator widget for Qt 5.
+
+	  https://github.com/lxqt/qtermwidget

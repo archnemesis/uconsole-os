@@ -18,6 +18,18 @@ fi
 # ensure overlays exists for genimage
 mkdir -p "${BINARIES_DIR}/rpi-firmware/overlays"
 
+# copy overlays for devterm
+cp -v "${BUILD_DIR}/linux-custom/arch/arm/boot/dts/overlays/devterm-misc.dtbo" \
+	"${BINARIES_DIR}/rpi-firmware/overlays"
+cp -v "${BUILD_DIR}/linux-custom/arch/arm/boot/dts/overlays/devterm-panel.dtbo" \
+	"${BINARIES_DIR}/rpi-firmware/overlays"
+cp -v "${BUILD_DIR}/linux-custom/arch/arm/boot/dts/overlays/devterm-panel-uc.dtbo" \
+	"${BINARIES_DIR}/rpi-firmware/overlays"
+cp -v "${BUILD_DIR}/linux-custom/arch/arm/boot/dts/overlays/devterm-pmu.dtbo" \
+	"${BINARIES_DIR}/rpi-firmware/overlays"
+cp -v "${BUILD_DIR}/linux-custom/arch/arm/boot/dts/overlays/devterm-wifi.dtbo" \
+	"${BINARIES_DIR}/rpi-firmware/overlays"
+
 # Mount data partition
 mkdir -p "${TARGET_DIR}/data"
 echo "/dev/mmcblk0p3 /data ext4 defaults 0 0" >> "${TARGET_DIR}/etc/fstab"

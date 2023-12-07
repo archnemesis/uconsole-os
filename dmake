@@ -1,9 +1,26 @@
 #!/bin/sh
 
-docker build --progress=plain -t uconsole-os-builder .
-docker run \
-	--interactive \
-	--tty \
-	--volume "${PWD}:/build" \
-	--workdir /build \
-	--entrypoint /build/build.sh uconsole-os-builder $@
+dmake ()
+{
+	DOCKER_IIDFILE="/tmp/docker.iid$$"
+	DOCKER_TERM="vt100"
+
+	docker build \
+		--build-arg BUILD_UID="$(id -u ${USER})" \
+		--build-arg BUILD_GID="$(id -g ${USER})" \
+		--iidfile ${DOCKER_IIDFILE} \
+		--progress plain \
+		--tag uconsole-os-builder .
+
+	docker run \
+		--env TERM="${DOCKER_TERM}" \
+		--volume "${HOME}:/home/build" \
+		--volume "${PWD}:/build" \
+		--workdir /build \
+		--entrypoint=make \
+		$(cat ${DOCKER_IIDFILE}) $@
+
+	rm -f "${DOCKER_IIDFILE}"
+}
+
+dmake $@

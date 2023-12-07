@@ -16,7 +16,6 @@ do_update()
 	echo "Extracting installation script..."
 	if ! tar -xf "${firmware_file}" -C /tmp install.sh; then
 		echo "Unable to extract installation script"
-		rm -f "${firmware_file}"
 		return 1
 	fi
 
@@ -25,7 +24,6 @@ do_update()
 	echo "Extracting firmware update..."
 	if ! tar -xf "${firmware_file}" --to-command="${install_script}"; then
 		echo "Unable to install firmware update"
-		rm -f "${firmware_file}"
 		rm -f "${install_script}"
 		return 1
 	fi

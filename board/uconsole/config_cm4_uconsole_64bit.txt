@@ -11,23 +11,23 @@ initramfs initramfs.cpio.gz
 # If the text shown on the screen disappears off the edge, comment this out
 disable_overscan=1
 
-# How much memory in MB to assign to the GPU on Pi models having
-# 256, 512 or 1024 MB total memory
-gpu_mem_256=100
-gpu_mem_512=100
-gpu_mem_1024=100
+dtparam=audio=on
 
-# fixes rpi (3B, 3B+, 3A+, 4B and Zero W) ttyAMA0 serial console
-dtoverlay=miniuart-bt
-
-# enable RTC
-dtparam=i2c_vc=on
-dtoverlay=i2c-rtc,pcf85063a,i2c_csi_dsi
-
-# enable dwc2 USB controller (USB 2.0)
-otg_mode=1
-dtoverlay=dwc2,dr_mode=host
+max_framebuffers=2
 
 # enable 64bits support
 arm_64bit=1
 
+ignore_lcd=1
+dtoverlay=dwc2,dr_mode=host
+dtoverlay=vc4-kms-v3d-pi4,cma-384
+dtoverlay=devterm-pmu
+dtoverlay=devterm-panel-uc
+dtoverlay=devterm-misc
+dtoverlay=audremap,pins_12_13
+dtoverlay=uart0,txd0_pin=14,rxd0_pin=15
+
+dtparam=spi=on
+gpio=10=ip,np
+
+# End

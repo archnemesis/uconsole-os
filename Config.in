@@ -1,0 +1,2 @@
+source "$BR2_EXTERNAL_UCONSOLE_PATH/package/lxqt-build-tools/Config.in"
+source "$BR2_EXTERNAL_UCONSOLE_PATH/package/qtermwidget/Config.in"
