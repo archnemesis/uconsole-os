@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ "${IFACE}" == "wlan0" ]; then
+	wpa_supplicant -B -i ${IFACE} -c /etc/wpa_supplicant.conf
+fi

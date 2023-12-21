@@ -30,4 +30,6 @@ dtoverlay=uart0,txd0_pin=14,rxd0_pin=15
 dtparam=spi=on
 gpio=10=ip,np
 
+dtparam=ant2
+
 # End
